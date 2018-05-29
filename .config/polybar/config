@@ -96,7 +96,7 @@ type = custom/script
 interval = 1
 format-prefix = " "
 format = <label>
-exec = python ~/.dotfiles/scripts/spotify.py
+exec = python ~/.config/scripts/spotify.py
 
 
 [module/i3]
@@ -135,7 +135,7 @@ label =  %percentage%%
 
 [module/temperature]
 type = custom/script
-exec = ~/.config/polybar/temp.sh
+exec = ~/.config/scripts/temp.sh
 interval = 10
 label = %output%°C
 format-prefix = " "
@@ -144,8 +144,8 @@ format-prefix = " "
 [module/gpu]
 type = custom/ipc
 hook-0 = cat /proc/acpi/bbswitch | awk '{print $2}'
-hook-1 = tee /proc/acpi/bbswitch <<< ON
-hook-2 = modprobe -r nvidia_uvm && modprobe -r nvidia && tee /proc/acpi/bbswitch <<< OFF
+hook-1 = sudo -n ~/.config/scripts/GPUon.sh
+hook-2 = sudo -n ~/.config/scripts/GPUoff.sh
 initial = 1
 click-left = polybar-msg -p %pid% hook gpu 2
 click-right = polybar-msg -p %pid% hook gpu 3
