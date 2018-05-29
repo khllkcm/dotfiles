@@ -14,4 +14,4 @@ Rice configuration files.
 
 
 
-![alt text](https://raw.githubusercontent.com/khllkcm/dotfiles/master/Screenshot.png)
+![alt text](https://raw.githubusercontent.com/khllkcm/dotfiles/master/Screenshot.jpeg)
