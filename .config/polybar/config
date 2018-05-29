@@ -1,0 +1,203 @@
+[bar/bar]
+# Position
+bottom = false
+monitor = eDP-1
+wm-restack = none
+override-redirect = false
+
+
+# Dimensions
+width = 100%
+height = 20
+offset-y = 0
+offset-x = 0
+border-top-size = 10
+border-bottom-size = 0
+border-right-size = 10
+border-left-size = 10
+
+
+# Style
+fixed-center = true
+padding-left = 1
+padding-right = 1
+module-margin = 1
+
+
+# Icon  tray
+tray-position = none
+tray-detached = true
+
+
+# Custom action scripts
+enable-ipc = true
+
+
+# Fonts
+font-0 = Hack:size=10;2
+font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=14;3"
+font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=14;3"
+font-3 = "Font Awesome 5 Brands:pixelsize=14;3"
+
+# Colours
+background = 0
+foreground = #25413f
+border-color = 0
+
+
+# Module location
+modules-left = battery backlight volume spotify
+modules-center = i3
+modules-right = cpu temperature gpu wlan essid time powermenu
+
+
+# Modules
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 98
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full-prefix = "  "
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-framerate = 750
+
+
+[module/backlight]
+type = internal/xbacklight
+format = <ramp> <label>
+label= %percentage%
+ramp-0=
+ramp-1=
+ramp-2= 
+ramp-3=
+
+
+[module/volume]
+type = internal/volume
+format-volume = <ramp-volume> <label-volume>
+format-muted =  
+label-volume=%percentage%
+ramp-volume-0 = 
+ramp-volume-1 = 
+
+
+[module/spotify]
+type = custom/script
+interval = 1
+format-prefix = " "
+format = <label>
+exec = python ~/.dotfiles/scripts/spotify.py
+
+
+[module/i3]
+type = internal/i3
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;9
+ws-icon-9 = 10;10
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+pin-workspaces = true
+label-unfocused-foreground = #657378
+label-focused-foreground = #25413f
+label-urgent-foreground = #ff0000
+label-focused = %icon%
+label-focused-padding = 1
+label-unfocused = %icon%
+label-unfocused-padding = 1
+label-visible = %icon%
+label-visible-padding = 1
+label-urgent = %icon%
+label-urgent-padding = 1
+
+
+[module/cpu]
+type = internal/cpu
+label =  %percentage%%
+
+
+[module/temperature]
+type = custom/script
+exec = ~/.config/polybar/temp.sh
+interval = 10
+label = %output%°C
+format-prefix = " "
+
+
+[module/gpu]
+type = custom/ipc
+hook-0 = cat /proc/acpi/bbswitch | awk '{print $2}'
+hook-1 = tee /proc/acpi/bbswitch <<< ON
+hook-2 = modprobe -r nvidia_uvm && modprobe -r nvidia && tee /proc/acpi/bbswitch <<< OFF
+initial = 1
+click-left = polybar-msg -p %pid% hook gpu 2
+click-right = polybar-msg -p %pid% hook gpu 3
+format =  <output>
+
+
+[module/wlan]
+type = internal/network
+interface = wlp2s0
+interval = 3.0
+format-connected =   
+format-disconnected = 
+
+
+[module/essid]
+type = custom/ipc
+hook-0 = iwgetid -r
+hook-1 = echo 
+initial = 2
+click-right = polybar-msg -p %pid% hook essid 1
+click-left = polybar-msg -p %pid% hook essid 2
+format = <output>
+
+
+[module/time]
+type = internal/date
+interval = 5
+date =
+date-alt = " %e %B-%A"
+time = %H:%M
+time-alt = %H:%M:%S
+format-prefix = ""
+label = %date% %time%
+
+[module/powermenu]
+type = custom/menu
+format-spacing = 1
+label-open = 
+label-open-foreground = #25413f
+label-close = 
+label-close-foreground = #25413f
+label-separator = |
+label-separator-foreground = #25413f
+menu-0-0 = 
+menu-0-0-exec = menu-open-1
+menu-0-1 = 
+menu-0-1-exec = menu-open-2
+menu-1-0 = 
+menu-1-0-exec = menu-open-0
+menu-1-1 = 
+menu-1-1-exec = sudo reboot
+menu-2-0 = 
+menu-2-0-exec = sudo poweroff
+menu-2-1 = 
+menu-2-1-exec = menu-open-0
