@@ -19,7 +19,7 @@ try:
         song_name = song_name[0:24]
         song_name += "..."
 
-    print("{}: {}".format(artist, song).encode("UTF-8"))
+    print("{}: {}".format(artist_name, song_name).encode("UTF-8"))
 
 except Exception as e:
     if isinstance(e, dbus.exceptions.DBusException):
